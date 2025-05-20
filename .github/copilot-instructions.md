@@ -154,6 +154,8 @@ src/
 
 ## References to documentation
 
-- Tailwind CSS installation: https://tailwindcss.com/docs/installation/using-vite
-- React Router installation: https://reactrouter.com/start/declarative/installation
-- shadcn/ui installation: https://ui.shadcn.com/docs/installation/vite
+Follow the official instructions for these libraries exactly as they are written:
+
+- [Tailwind CSS installation](https://tailwindcss.com/docs/installation/using-vite)
+- [React Router installation](https://reactrouter.com/start/declarative/installation)
+- [shadcn/ui installation](https://ui.shadcn.com/docs/installation/vite)
