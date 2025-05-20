@@ -11,6 +11,8 @@ This guide outlines **best practices** for building a React application using Vi
 - React
 - React Router
 - shadcn/ui
+- React Hook Form
+- Zod
 - Tailwind CSS
 - React Query
 - Axios
