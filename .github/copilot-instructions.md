@@ -62,6 +62,7 @@ src/
       custom-font.woff2
   main.tsx                                 # Entry point for the application
   App.tsx                                  # Main application component
+  .nvmrc                                   # Node version manager configuration
 ```
 
 - Co-locate tests and types with components when possible.
