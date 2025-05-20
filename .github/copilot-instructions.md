@@ -149,3 +149,11 @@ src/
 
 - Use `define` for global constants.
 - Watch out for plugin compatibility with Vite’s fast refresh.
+
+---
+
+## References to documentation
+
+- Tailwind CSS installation: https://tailwindcss.com/docs/installation/using-vite
+- React Router installation: https://reactrouter.com/start/declarative/installation
+- shadcn/ui installation: https://ui.shadcn.com/docs/installation/vite
