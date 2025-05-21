@@ -96,6 +96,12 @@ src/
 - Use **kebab-case** for file and folder names.
 - Use **single quotes** for strings.
 - Use **double quotes** for JSX attributes.
+- Use **2 spaces** for indentation.
+- Use arrow functions for functional components.
+- Use `const` for variables that are not reassigned.
+- Use `let` for variables that are reassigned.
+- Use `async/await` for asynchronous code.
+- Use `Promise.all` for parallel asynchronous operations.
 - Co-locate tests and types with components when possible.
 - Every component should have its own test file.
 - Every hook should have its own test file.
