@@ -28,19 +28,19 @@ This guide outlines **best practices** for building a React application using Vi
 
 ## Project Structure
 
-Use a clear and consistent folder structure. Here’s a recommended structure:
+Use a clear and consistent folder structure. Here is a recommended structure:
 
 ```
 src/
-  common/                                  # Reusable components (e.g., Button, Modal)
-    components/
-      Button/                              # Each comon component has its own folder
+  common/                                  # Common components, hooks, and utilities used across the app
+    components/                            # Reusable components (e.g., Button, Modal)
+      Button/                              # Each common component has its own folder
         Button.tsx                         # A common React component
         Button.test.tsx                    # Tests for the common component
     hooks/                                 # Reusable hooks (e.g., useDebounce)
       useDebounce.ts                       # A common React hook
     utils/                                 # Reusable utility functions and constants
-    types/                                 # Type definitions
+    types/                                 # Reusable type definitions
   pages/                                   # Top-level pages (e.g., Home, About)
     Home/                                  # Each page has its own folder
       components/                          # Components specific to the Home page
@@ -65,8 +65,6 @@ src/
   .nvmrc                                   # Node version manager configuration
 ```
 
-- Co-locate tests and types with components when possible.
-
 ## Rules
 
 - Use **TypeScript** for type safety.
@@ -88,7 +86,17 @@ src/
 - Use **@testing-library/user-event** for simulating user interactions.
 - Use **GitHub Actions** for CI/CD.
 - Always use the Node version specified in `.nvmrc` for consistency across environments.
-- All dependency versions should be pinned in `package.json` to avoid breaking changes.
+- Pin all dependency versions in `package.json` to avoid breaking changes.
+- Use inline comments to explain complex logic.
+- Use **absolute imports** for better readability and maintainability.
+- Use **relative imports** for local files within the same folder.
+- Use **PascalCase** for component and page names.
+- Use **camelCase** for utility functions and variables.
+- Use **UPPER_SNAKE_CASE** for constants.
+- Use **kebab-case** for file and folder names.
+- Use **single quotes** for strings.
+- Use **double quotes** for JSX attributes.
+- Co-locate tests and types with components when possible.
 - Every component should have its own test file.
 - Every hook should have its own test file.
 - Every utility function should have its own test file.
@@ -102,6 +110,77 @@ src/
 - Use **functional components** and **React hooks** (`useState`, `useEffect`, etc.).
 - Use `React.memo` or `useMemo` only when you measure performance issues.
 - React components should only export a single component.
+
+Example of a component:
+
+```tsx
+import { PropsWithChildren } from "react";
+import { cva, VariantProps } from "class-variance-authority";
+
+import { cn } from "common/utils/css";
+
+/**
+ * Define the component base and variant styles.
+ */
+const variants = cva("rounded-full font-bold", {
+  variants: {
+    size: {
+      sm: "px-1 py-0.5 text-[10px] leading-none",
+      md: "px-2 py-1 leading-none",
+      lg: "px-3 py-1.5 text-lg leading-none",
+    },
+    variant: {
+      danger: "bg-red-600 dark:bg-red-700 dark:opacity-75 text-white",
+      info: "bg-neutral-200/90 text-slate-900",
+      primary: "bg-blue-600/90 text-white",
+      success: "bg-green-800/90 text-white",
+      warning: "bg-amber-400/90 text-slate-900",
+    },
+    uppercase: {
+      false: "",
+      true: "uppercase",
+    },
+  },
+  defaultVariants: { size: "md", variant: "danger", uppercase: false },
+});
+
+/**
+ * The variant attributes of the Badge component.
+ */
+type BadgeVariants = VariantProps<typeof variants>;
+
+/**
+ * Properties for the `Badge` React component.
+ */
+export interface BadgeProps extends PropsWithChildren, BadgeVariants {
+  className?: string;
+  testId?: string;
+}
+
+/**
+ * The `Badge` component highlights a notification, a count, or a piece status
+ * information.
+ */
+const Badge = ({
+  children,
+  className,
+  size,
+  testId = "badge",
+  variant,
+  uppercase,
+}: BadgeProps): JSX.Element => {
+  return (
+    <div
+      className={cn(variants({ size, variant, uppercase, className }))}
+      data-testid={testId}
+    >
+      {children}
+    </div>
+  );
+};
+
+export default Badge;
+```
 
 ---
 
@@ -140,8 +219,8 @@ src/
 
 ## Testing
 
-- Use **Vitest** (Vite-native test runner):
-- Use **Testing Library** for component tests.
+- Use **Vitest** (Vite-native test runner) for unit tests.
+- Use **Testing Library** for component and hook tests.
 - Configure tests in `vite.config.ts` under `test` key.
 - Configure jest-dom for DOM assertions.
 - Use **@testing-library/user-event** for simulating user interactions.
@@ -153,22 +232,24 @@ src/
 - Use `beforeEach` to set up common test conditions.
 - Use `afterEach` to clean up after tests.
 
-  ```ts
-  import { render, screen } from "@testing-library/react";
-  import userEvent from "@testing-library/user-event";
+Example of a test:
 
-  test("should click button", async () => {
-    // Arrange
-    const user = userEvent.setup();
-    const screen = render(<Button />);
+```ts
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-    // Act
-    await user.click(screen.getByRole("button"));
+test("should click button", async () => {
+  // Arrange
+  const user = userEvent.setup();
+  const screen = render(<Button />);
 
-    // Assert
-    expect(screen.getByText("Clicked")).toBeInTheDocument();
-  });
-  ```
+  // Act
+  await user.click(screen.getByRole("button"));
+
+  // Assert
+  expect(screen.getByText("Clicked")).toBeInTheDocument();
+});
+```
 
 ---
 
