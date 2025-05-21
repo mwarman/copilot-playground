@@ -34,27 +34,27 @@ Use a clear and consistent folder structure. Here’s a recommended structure:
 src/
   common/                                  # Reusable components (e.g., Button, Modal)
     components/
-      Button/
-        Button.tsx
-        Button.test.tsx
+      Button/                              # Each comon component has its own folder
+        Button.tsx                         # A common React component
+        Button.test.tsx                    # Tests for the common component
     hooks/                                 # Reusable hooks (e.g., useDebounce)
-      useDebounce.ts
+      useDebounce.ts                       # A common React hook
     utils/                                 # Reusable utility functions and constants
     types/                                 # Type definitions
   pages/                                   # Top-level pages (e.g., Home, About)
-    Home/
+    Home/                                  # Each page has its own folder
       components/                          # Components specific to the Home page
-        Hero/
-          Hero.tsx
-          Hero.test.tsx
+        Hero/                              # Each page-level component has its own folder
+          Hero.tsx                         # A component specific to the Home page
+          Hero.test.tsx                    # Tests for the Hero component
       utils/                               # Utilities and constants specific to the Home page
       hooks/                               # Hooks specific to the Home page
       types/                               # Types specific to the Home page
-      Home.tsx
-      Home.test.tsx
+      Home.tsx                             # A top-level page component
+      Home.test.tsx                        # Tests for the top-level page component
     About/
-      About.tsx
-      About.test.tsx
+      About.tsx                            # A top-level page component
+      About.test.tsx                       # Tests for the top-level page component
   assets/                                  # Static assets (e.g., images, fonts)
     images/
       logo.png
@@ -67,18 +67,43 @@ src/
 
 - Co-locate tests and types with components when possible.
 
+## Rules
+
+- Use **TypeScript** for type safety.
+- Use **Vite** for fast development and build times.
+- Use **React Router** for routing.
+- Use **Zod** for schema validation.
+- Use **React Hook Form** for form handling.
+- Use **Axios** for HTTP requests.
+- Use **Lodash** for utility functions.
+- Use **shadcn/ui** for pre-built components with Tailwind CSS.
+- Use **React Query** for data fetching and caching.
+- Use **Tailwind CSS** for utility-first styling.
+- Use **class-variance-authority** (CVA) for component variants.
+- Use **lucide-react** for icons.
+- Use **ESLint** for linting and code quality.
+- Use **Vitest** for testing.
+- Use **Testing Library** for component testing.
+- Use **jest-dom** for DOM assertions.
+- Use **@testing-library/user-event** for simulating user interactions.
+- Use **GitHub Actions** for CI/CD.
+- Every component should have its own test file.
+- Every hook should have its own test file.
+- Every utility function should have its own test file.
+- Every page should have its own test file.
+- Every utility function should have its own test file.
+
 ---
 
-## React Best Practices
+## React Rules
 
 - Use **functional components** and **React hooks** (`useState`, `useEffect`, etc.).
 - Use `React.memo` or `useMemo` only when you measure performance issues.
-- Use **React Query** for data fetching.
-- Use **shadcn/ui** for pre-built components with Tailwind CSS.
+- React components should only export a single component.
 
 ---
 
-## Routing (React Router)
+## Routing (React Router) Rules
 
 - Lazy-load routes with `React.lazy` and `Suspense`.
 - Use nested routes and layout components effectively.
@@ -86,10 +111,10 @@ src/
 
 ---
 
-## Styling
+## Styling Rules
 
 - Use **Tailwind CSS** for utility-first styling.
-- Use **shadcn/ui** for pre-built components with Tailwind CSS.
+- Use **class-variance-authority** (CVA) for component variants.
 
 ---
 
@@ -107,7 +132,7 @@ src/
 
 ## Linting and Formatting
 
-- Use **ESLint** with a React + TypeScript config:
+- Use **ESLint** with a React + TypeScript configuration file.
 
 ---
 
@@ -116,6 +141,32 @@ src/
 - Use **Vitest** (Vite-native test runner):
 - Use **Testing Library** for component tests.
 - Configure tests in `vite.config.ts` under `test` key.
+- Configure jest-dom for DOM assertions.
+- Use **@testing-library/user-event** for simulating user interactions.
+- Use **screen** for accessing elements in the DOM.
+- Use userEvent.setup to initialize user events:
+- Write unit tests for components, hooks, and utilities.
+- Write unit tests following the **Arrange-Act-Assert** pattern.
+- Use `describe` and `it` blocks to group tests logically.
+- Use `beforeEach` to set up common test conditions.
+- Use `afterEach` to clean up after tests.
+
+  ```ts
+  import { render, screen } from "@testing-library/react";
+  import userEvent from "@testing-library/user-event";
+
+  test("should click button", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const screen = render(<Button />);
+
+    // Act
+    await user.click(screen.getByRole("button"));
+
+    // Assert
+    expect(screen.getByText("Clicked")).toBeInTheDocument();
+  });
+  ```
 
 ---
 
@@ -147,7 +198,6 @@ src/
   }
   ```
 
-- Use `define` for global constants.
 - Watch out for plugin compatibility with Vite’s fast refresh.
 
 ---
